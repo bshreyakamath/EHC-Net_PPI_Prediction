@@ -86,6 +86,29 @@ PyTorch was available in the Google Colab environment.
 
 **Note:** Package versions may differ across datasets and experimental runs. The versions listed above are those recorded for the SHS27K pair-level experiment.
 
+
+## Dataset Availability and Preparation
+
+The original datasets and processed input files are not included in this repository. Users must obtain the required dataset files before executing the experiment notebooks.
+
+### SHS27K and SHS148K
+
+For these datasets, users must download the corresponding interaction data (`actions` files) and protein sequence data (`sequences` files) from their original sources.
+
+The downloaded files should be made available in the locations expected by the corresponding notebooks.
+
+
+### Drosophila melanogaster, C. elegans, and E. coli
+
+The corresponding experiment notebooks use direct download URLs to retrieve the required dataset files from their original data sources.
+
+The files are downloaded programmatically using `wget` and processed within the notebooks. Users do not need to manually upload these original dataset files before running the download cells.
+
+### Important
+
+Dataset file names, paths, preprocessing steps, and input formats are specified in the corresponding experiment notebooks. Please follow the instructions and execution order provided in each notebook.
+
+
 ## Repository Structure
 
 The repository is organized into two directories corresponding to the two evaluation protocols.
