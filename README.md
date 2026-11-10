@@ -60,7 +60,7 @@ Depending on the experiment, evaluation may include:
 Repository Structure
 
 The repository is organized into two directories corresponding to the two evaluation protocols.
-
+```text
 EHC-Net_PPI_Prediction/
 │
 ├── README.md
@@ -78,7 +78,7 @@ EHC-Net_PPI_Prediction/
     ├── EHC-Net_protein_disjoint_Elegans.ipynb
     ├── EHC_Net_Protein_disjoint_ecoli.ipynb
     └── README.md
-
+```
 Experiment Notebooks
 
 1. Protein-Pair-Level Split
