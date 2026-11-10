@@ -57,6 +57,35 @@ Depending on the experiment, evaluation may include:
 
 - Matthews correlation coefficient (MCC)
 
+
+## Environment and Dependencies
+
+The EHC-Net experiments were conducted using Google Colab with GPU acceleration.
+
+The following package versions were recorded during the SHS27K pair-level experiment:
+
+| Dependency | Version |
+|---|---|
+| PyTorch | 2.11.0+cu128 |
+| PyTorch Geometric | 2.8.0 |
+| NumPy | 2.0.2 |
+| Fair-ESM | 2.0.0 |
+| THOP | 0.1.1.post2209072238 |
+| tqdm | 4.67.3 |
+
+The following packages were installed in the Colab environment:
+
+```bash
+pip install fair-esm
+pip install torch-geometric
+pip install tqdm
+pip install thop
+```
+
+PyTorch was available in the Google Colab environment.
+
+**Note:** Package versions may differ across datasets and experimental runs. The versions listed above are those recorded for the SHS27K pair-level experiment.
+
 Repository Structure
 
 The repository is organized into two directories corresponding to the two evaluation protocols.
