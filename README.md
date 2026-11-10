@@ -85,24 +85,24 @@ Experiment Notebooks
 
 The pair_level_split/ directory contains the EHC-Net experiment notebooks for all five datasets:
 
-SHS27K
+- SHS27K
 
-SHS148K
+- SHS148K
 
-Drosophila melanogaster
+- Drosophila melanogaster
 
-Caenorhabditis elegans
+- Caenorhabditis elegans
 
-Escherichia coli
+- Escherichia coli
 
 2. Protein-Disjoint Split
 
 The protein_disjoint_split/ directory contains the experiment notebooks for:
 
-Drosophila melanogaster
+- Drosophila melanogaster
 
-Caenorhabditis elegans
+- Caenorhabditis elegans
 
-Escherichia coli
+- Escherichia coli
 
 Each directory also contains a separate README describing its corresponding evaluation protocol.
