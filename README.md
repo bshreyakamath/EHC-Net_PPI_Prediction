@@ -57,3 +57,52 @@ Depending on the experiment, evaluation may include:
 
 - Matthews correlation coefficient (MCC)
 
+Repository Structure
+
+The repository is organized into two directories corresponding to the two evaluation protocols.
+
+EHC-Net_PPI_Prediction/
+│
+├── README.md
+│
+├── pair_level_split/
+│   ├── EHC-Net_Drosophila.ipynb
+│   ├── EHC-Net_Ecoli.ipynb
+│   ├── EHC-Net_Elegans.ipynb
+│   ├── EHC-Net_SHS148K.ipynb
+│   ├── EHC-Net_SHS27K.ipynb
+│   └── README.md
+│
+└── protein_disjoint_split/
+    ├── EHC-Net_Protein_disjoint_Drosophila.ipynb
+    ├── EHC-Net_protein_disjoint_Elegans.ipynb
+    ├── EHC_Net_Protein_disjoint_ecoli.ipynb
+    └── README.md
+
+Experiment Notebooks
+
+1. Protein-Pair-Level Split
+
+The pair_level_split/ directory contains the EHC-Net experiment notebooks for all five datasets:
+
+SHS27K
+
+SHS148K
+
+Drosophila melanogaster
+
+Caenorhabditis elegans
+
+Escherichia coli
+
+2. Protein-Disjoint Split
+
+The protein_disjoint_split/ directory contains the experiment notebooks for:
+
+Drosophila melanogaster
+
+Caenorhabditis elegans
+
+Escherichia coli
+
+Each directory also contains a separate README describing its corresponding evaluation protocol.
