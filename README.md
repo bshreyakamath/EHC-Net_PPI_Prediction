@@ -1,7 +1,7 @@
 # EHC-Net_PPI_Prediction
 EHC-Net: ESM2-Enhanced Hypergraph Learning for Protein–Protein Interaction Prediction
 
-Overview
+## Overview
 
 EHC-Net is a deep learning framework for protein–protein interaction (PPI) prediction that combines pretrained protein sequence representations with hypergraph learning and cross-attention.
 
@@ -9,7 +9,7 @@ The framework uses ESM2 to extract protein sequence embeddings, a hypergraph neu
 
 This repository contains the proposed EHC-Net implementation and dataset-specific experiments for five PPI datasets, evaluated using two data-splitting protocols.
 
-Datasets
+## Datasets
 
 The experiments cover the following datasets:
 
@@ -23,7 +23,7 @@ The experiments cover the following datasets:
 
 5. Escherichia coli (E. coli)
 
-Evaluation Protocols
+## Evaluation Protocols
 
 Two evaluation protocols are maintained separately.
 
@@ -39,7 +39,7 @@ In this protocol, proteins are assigned to separate training, validation, and te
 
 This protocol evaluates generalization to proteins that are absent from the other partitions.
 
-Evaluation Metrics
+## Evaluation Metrics
 
 Depending on the experiment, evaluation may include:
 
@@ -86,7 +86,7 @@ PyTorch was available in the Google Colab environment.
 
 **Note:** Package versions may differ across datasets and experimental runs. The versions listed above are those recorded for the SHS27K pair-level experiment.
 
-Repository Structure
+## Repository Structure
 
 The repository is organized into two directories corresponding to the two evaluation protocols.
 ```text
@@ -108,7 +108,7 @@ EHC-Net_PPI_Prediction/
     ├── EHC_Net_Protein_disjoint_ecoli.ipynb
     └── README.md
 ```
-Experiment Notebooks
+## Experiment Notebooks
 
 1. Protein-Pair-Level Split
 
