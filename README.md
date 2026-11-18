@@ -39,6 +39,34 @@ In this protocol, proteins are assigned to separate training, validation, and te
 
 This protocol evaluates generalization to proteins that are absent from the other partitions.
 
+## Hypergraph Construction
+
+For the SHS27K protein-pair-level experiment, the hypergraph is constructed using positive interaction pairs from the training partition only.
+
+An adjacency-based neighborhood is created for each protein using its positive training interactions. Each hyperedge contains a central protein and its associated positive training neighbors. The resulting hypergraph is represented using a hyperedge index and combined with the pretrained ESM2 protein embeddings as input to the HGNN encoder.
+
+This construction ensures that the hypergraph interaction structure is derived from the training partition rather than from the validation or test interaction labels.
+
+
+## Reproducibility and Random Seed
+
+All random operations in the SHS27K protein-pair-level experiment use a fixed random seed of 42.
+
+The seed is applied to Python's random module, NumPy, and PyTorch. CUDA random seeds are also initialized when a GPU is available. cuDNN deterministic mode is enabled and benchmarking is disabled.
+
+The dataset is divided using stratified random sampling to preserve the class distribution across the partitions.
+
+The initial split assigns 80% of the interaction pairs to the training and validation pool and 20% to the test set. Subsequently, 10% of the remaining training and validation pool is allocated to validation.
+
+Therefore, the resulting approximate proportions are:
+
+- Training: 72%
+- Validation: 8%
+- Testing: 20%
+
+The same random seed (42) is used for both splitting operations.
+
+
 ## Evaluation Metrics
 
 Depending on the experiment, evaluation may include:
@@ -86,6 +114,33 @@ PyTorch was available in the Google Colab environment.
 
 **Note:** Package versions may differ across datasets and experimental runs. The versions listed above are those recorded for the SHS27K pair-level experiment.
 
+## EHC-Net Model Configuration and Hyperparameters
+
+The SHS27K EHC-Net experiment uses the following model configuration and training hyperparameters.
+
+| Parameter | Value |
+|---|---|
+| ESM2 pretrained model | esm2_t6_8M_UR50D |
+| ESM2 representation layer | 6 |
+| Protein embedding dimension | 320 |
+| Sequence truncation length | 1,022 |
+| Protein encoder | 320 → 512 → 320 |
+| HGNN layers | 320 → 512 → 256 → 128 |
+| Cross-attention dimension | 256 |
+| Attention heads | 8 |
+| Classifier | 1024 → 512 → 128 → 1 |
+| Dropout | 0.3 |
+| Loss function | BCEWithLogitsLoss |
+| Optimizer | Adam |
+| Learning rate | 0.001 |
+| Batch size | 128 |
+| Maximum epochs | 20 |
+| Early stopping patience | 5 |
+| Model selection criterion | Validation ROC-AUC |
+| Classification threshold | 0.5 |
+
+The model is trained using binary cross-entropy with logits. The best model is selected according to validation ROC-AUC and saved for subsequent test evaluation.
+
 
 ## Dataset Availability and Preparation
 
@@ -97,6 +152,20 @@ For these datasets, users must download the corresponding interaction data (`act
 
 The downloaded files should be made available in the locations expected by the corresponding notebooks.
 
+### SHS27K Data Preprocessing
+
+The SHS27K interaction data are loaded from `SHS27k.actions.txt`, and protein sequences are obtained from `SHS27k.seqs.tsv`.
+
+The protein identifiers from the interaction file are converted into protein pairs, and all extracted interaction pairs are assigned a positive label (1). Duplicate interactions are removed by representing each unordered protein pair in a canonical sorted order.
+
+Negative interaction pairs are generated through random sampling of two distinct protein identifiers from the available sequence collection. Candidate pairs that already exist in the positive interaction set are rejected. Negative pairs are sampled until their number equals the number of positive pairs, producing an initially balanced dataset.
+
+The positive and negative pairs are combined, duplicate unordered pairs are removed, and the resulting dataset is divided into training, validation, and testing partitions using stratified random sampling with seed 42.
+
+Protein sequences are subsequently used to generate pretrained ESM2 embeddings. Sequences are truncated to a maximum length of 1,022 amino acids. The ESM2 model `esm2_t6_8M_UR50D` is used to extract representations from layer 6. Residue-level representations are mean-pooled to obtain 320-dimensional protein embeddings.
+
+Finally, interaction pairs containing proteins without generated embeddings are excluded from the corresponding partitions.
+
 
 ### Drosophila melanogaster, C. elegans, and E. coli
 
@@ -107,6 +176,31 @@ The files are downloaded programmatically using `wget` and processed within the 
 ### Important
 
 Dataset file names, paths, preprocessing steps, and input formats are specified in the corresponding experiment notebooks. Please follow the instructions and execution order provided in each notebook.
+
+## Reproducing the SHS27K Pair-Level Experiment
+
+The SHS27K experiment can be reproduced using the `EHC-Net_SHS27K.ipynb` notebook in the `pair_level_split/` directory.
+
+1. Open the notebook using Google Colab.
+2. Upload or provide access to `SHS27k.actions.txt` and `SHS27k.seqs.tsv`.
+3. Execute the notebook cells sequentially.
+4. Install the required dependencies when prompted by the notebook.
+5. Execute the preprocessing cells to generate positive and negative interaction pairs.
+6. Generate ESM2 protein embeddings and prepare the training, validation, and testing datasets.
+7. Construct the training hypergraph and initialize the EHC-Net model.
+8. Train the model using the specified hyperparameters.
+9. Load the best validation-selected model and execute the final test evaluation.
+
+The notebook generates the following processed dataset files:
+
+- `SHS27K_full_seed42_balanced.csv`
+- `train_SHS27K_seed42.csv`
+- `valid_SHS27K_seed42.csv`
+- `test_SHS27K_seed42.csv`
+
+The trained model checkpoint is saved as `STUDY3_shs27k.pth`.
+
+The notebook reports Accuracy, ROC-AUC, AUPR, F1-score, Precision, Recall, MCC, and the confusion matrix.
 
 
 ## Repository Structure
